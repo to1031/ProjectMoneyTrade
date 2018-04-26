@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<select>
+    <sql name="codm">
+        <query>SELECT COD_ID,ITEM_TYPE,ITEM_VALUE FROM COD_M</query>
+    </sql>
+    <sql name="publicholidaym">
+        <query>SELECT count(*) FROM PUBLIC_HOLIDAY_M</query>
+    </sql>
+    <sql name="currency_t">
+        <query>SELECT DATA_TIME,END_TRADE_PRICE,SELL_COUNT,SELL_AMMOUNT,BUY_COUNT,BUY_AMMOUNT FROM VIRTUAL_CURRENCY_T</query>
+    </sql>
+    <sql name="BTV_getTargetYm">
+	<query>SELECT BITFLYER_TRADE_HIS.EXEC_DATE,ISNULL(VIRTUAL_CURRENCY_T.DATA_TIME)</query>
+	<query>FROM (SELECT DISTINCT EXEC_DATE FROM BITFLYER_TRADE_HIS_T) AS BITFLYER_TRADE_HIS</query>
+	<query>LEFT OUTER JOIN VIRTUAL_CURRENCY_T</query>
+	<query>ON BITFLYER_TRADE_HIS.EXEC_DATE = VIRTUAL_CURRENCY_T.DATA_TIME</query> 
+	<query> ORDER BY BITFLYER_TRADE_HIS.EXEC_DATE</query>
+   </sql>
+    <sql name="BTV_getData">
+        <query>SELECT TRADE_TYPE,TRADE_AMMOUNT,FINAL_TRADE_PRICE,EXEC_DATE FROM BITFLYER_TRADE_HIS_T</query>
+    </sql>
+    <sql name="BTV_currency_t">
+        <query>SELECT DATA_TIME FROM VIRTUAL_CURRENCY_T</query>
+    </sql>
+    <sql name="BTV_currency_t_join">
+        <query>SELECT DATA_MINING_T.DATA_TIME,DATA_MINING_RESULT_T.DATA_TIME FROM DATA_MINING_T</query>
+        <query>LEFT OUTER JOIN DATA_MINING_RESULT_T ON DATA_MINING_T.DATA_TIME = DATA_MINING_RESULT_T.DATA_TIME</query>
+    </sql>
+    <sql name="get_COLLATERAL_BITFLYER_T">
+        <query>SELECT HIS_ID FROM COLLATERAL_BITFLYER_T ORDER BY HIS_ID DESC LIMIT 100</query>
+    </sql>
+   <sql name="machinelearn">
+        <query>SELECT</query>
+        <query>DATA_MINING_T.DATA_TIME,</query>
+        <query>DATA_MINING_T.WHAT_DAY,</query>
+        <query>DATA_MINING_T.DAY_MONDAY,</query>
+        <query>DATA_MINING_T.DAY_TUESDAY,</query>
+        <query>DATA_MINING_T.DAY_WEDNESDAY,</query>
+        <query>DATA_MINING_T.DAY_THURSDAY,</query>
+        <query>DATA_MINING_T.DAY_FRIDAY,</query>
+        <query>DATA_MINING_T.DAY_SATURDAY,</query>
+        <query>DATA_MINING_T.DAY_SUNDAY,</query>
+        <query>DATA_MINING_T.WEEK_DAY,</query>
+        <query>DATA_MINING_T.DAY_OF_TIME,</query>
+        <query>DATA_MINING_T.FINAL_TRANS_PRICE,</query>
+        <query>DATA_MINING_T.FTP_DIS_1MINUTE,</query>
+        <query>DATA_MINING_T.FTP_DIS_2MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_3MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_4MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_5MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_6MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_7MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_8MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_9MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_10MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_30MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_60MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_2HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_3HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_4HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_5HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_6HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_12HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_18HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_24HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_10M_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_1H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_2H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_3H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_4H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_5H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_6H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_12H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_24H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_2D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_4D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_7D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_14D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_28D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_10M_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_1H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_2H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_3H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_4H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_5H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_6H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_12H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_24H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_2D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_4D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_7D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_14D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_28D_LOW,</query>
+        <query>DATA_MINING_T.FINAL_SELL_COUNT,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_24HOURS,</query>
+        <query>DATA_MINING_T.FINAL_SELL_AMMOUNT,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_24HOURS,</query>
+        <query>DATA_MINING_T.FINAL_BUY_COUNT,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_24HOURS,</query>
+        <query>DATA_MINING_T.FINAL_BUY_AMMOUNT,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_24HOURS,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_1MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_2MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_3MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_4MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_5MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_6MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_7MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_8MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_9MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_10MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_15MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_20MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_30MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_60MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_2HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_3HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_4HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_5HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_6HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_12HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_18HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FTP_DIS_24HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_1MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_2MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_3MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_4MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_5MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_6MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_7MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_8MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_9MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_10MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_15MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_20MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_30MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_60MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_2HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_3HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_4HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_5HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_6HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_12HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_18HOUR,</query>
+        <query>DATA_MINING_RESULT_T.FLG_UPDOWN_24HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_5MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.LOW_10MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.LOW_15MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.LOW_20MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.LOW_30MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.LOW_60MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.LOW_2HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_3HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_4HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_5HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_6HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_12HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_18HOUR,</query>
+        <query>DATA_MINING_RESULT_T.LOW_24HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_5MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_10MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_15MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_20MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_30MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_60MINUTE,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_2HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_3HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_4HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_5HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_6HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_12HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_18HOUR,</query>
+        <query>DATA_MINING_RESULT_T.HIGH_24HOUR</query>
+        <query>FROM DATA_MINING_T INNER JOIN DATA_MINING_RESULT_T ON DATA_MINING_T.DATA_TIME = DATA_MINING_RESULT_T.DATA_TIME</query>
+    </sql>
+    <sql name="graphDe">
+        <query>SELECT FINAL_TRADE_PRICE,EXEC_DATE FROM BITFLYER_TRADE_HIS_T</query>
+    </sql>
+   <sql name="getDataMining">
+        <query>SELECT</query>
+        <query>DATA_MINING_T.DATA_TIME,</query>
+        <query>DATA_MINING_T.WHAT_DAY,</query>
+        <query>DATA_MINING_T.DAY_MONDAY,</query>
+        <query>DATA_MINING_T.DAY_TUESDAY,</query>
+        <query>DATA_MINING_T.DAY_WEDNESDAY,</query>
+        <query>DATA_MINING_T.DAY_THURSDAY,</query>
+        <query>DATA_MINING_T.DAY_FRIDAY,</query>
+        <query>DATA_MINING_T.DAY_SATURDAY,</query>
+        <query>DATA_MINING_T.DAY_SUNDAY,</query>
+        <query>DATA_MINING_T.WEEK_DAY,</query>
+        <query>DATA_MINING_T.DAY_OF_TIME,</query>
+        <query>DATA_MINING_T.FINAL_TRANS_PRICE,</query>
+        <query>DATA_MINING_T.FTP_DIS_1MINUTE,</query>
+        <query>DATA_MINING_T.FTP_DIS_2MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_3MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_4MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_5MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_6MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_7MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_8MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_9MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_10MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_30MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_60MINUTES,</query>
+        <query>DATA_MINING_T.FTP_DIS_2HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_3HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_4HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_5HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_6HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_12HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_18HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_24HOURS,</query>
+        <query>DATA_MINING_T.FTP_DIS_10M_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_1H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_2H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_3H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_4H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_5H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_6H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_12H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_24H_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_2D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_4D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_7D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_14D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_28D_HIGH,</query>
+        <query>DATA_MINING_T.FTP_DIS_10M_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_1H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_2H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_3H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_4H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_5H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_6H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_12H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_24H_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_2D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_4D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_7D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_14D_LOW,</query>
+        <query>DATA_MINING_T.FTP_DIS_28D_LOW,</query>
+        <query>DATA_MINING_T.FINAL_SELL_COUNT,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FSC_SUMIN_24HOURS,</query>
+        <query>DATA_MINING_T.FINAL_SELL_AMMOUNT,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FSA_SUMIN_24HOURS,</query>
+        <query>DATA_MINING_T.FINAL_BUY_COUNT,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FBC_SUMIN_24HOURS,</query>
+        <query>DATA_MINING_T.FINAL_BUY_AMMOUNT,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_1MINUTE,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_2MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_3MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_4MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_5MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_10MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_60MINUTES,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_2HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_3HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_4HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_5HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_6HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_12HOURS,</query>
+        <query>DATA_MINING_T.FBA_SUMIN_24HOURS</query>
+        <query>FROM DATA_MINING_T</query>
+    </sql>
+    <sql name="get_error_new">
+        <query>SELECT ERROR_ID,ERROR_TYPE,ERROR_MSG FROM TRADE_ERROR_BITF_T</query>
+        <query>WHERE ERROR_ID = (SELECT MAX(ERROR_ID) FROM TRADE_ERROR_BITF_T)</query>
+    </sql>
+    <sql name="get_new_order">
+        <query>SELECT ORDER_ID,ORDER_STS,ORDER_PRICE,ORDER_TYPE,ORDER_AMMOUNT,ACCEPT_ID FROM ORDER_BITFLYER_T WHERE ORDER_STS = '1' </query>
+    </sql>
+    <sql name="get_trade_sts_bit">
+        <query>SELECT DATA_TIME,ORDER_KBN,ORDER_PRICE,ORDER_TYPE,ORDER_AMMOUNT,ORDER_TIME,POSITION_KBN,POSITION_PRICE,POSITION_TYPE,POSITION_AMMOUNT,POSITION_TIME FROM TRADE_STS_BITFLYER_T</query>
+        <query>WHERE DATA_TIME = (SELECT MAX(DATA_TIME) FROM TRADE_STS_BITFLYER_T)</query>
+    </sql>
+</select>
