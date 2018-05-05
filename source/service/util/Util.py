@@ -161,11 +161,8 @@ class Util(object):
 		return whatday
 
 	# 祝日か平日か判断する。
-	def publicHolideyCheck(self,conddate):
-		# 1時的にDBアクセスクラスをappendする
-		sys.path.append(self.homeDir)
-		from dataBaseAccess import Dao
-		daoClass = Dao.Dao(self.pid,self)
+	def publicHolideyCheck(self,conddate,dao):
+		daoClass = dao
 
 		# public holiday マスタを取得する。
 		where = ["WHERE COND_DATE = '%s'"% conddate[0:8]]

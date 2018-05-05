@@ -4,3 +4,7 @@ __pycache__/
 #macのやつはいらん
 .DS_Store/
 .gitignore
+.DS_Store
+source/.DS_Store
+.DS_Store
+.DS_Store

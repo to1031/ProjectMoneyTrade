@@ -35,7 +35,7 @@ class DTMDataMining(object):
 		self.daoClass = dict['dao']
 
 	# メインメソッド
-	def dtmservice(self,date_time,dict):
+	def dtmservice(self,date_time,dict=None):
 		# 返却辞書を生成する。
 		returnDict = {}
 		returnDict['resultCode'] = 9
@@ -53,7 +53,7 @@ class DTMDataMining(object):
 
 		# 既にデータマイニングが格納されている場合またはまだカレントの値段がない場合は処理しない。
 		check_result = self.dataExistCheck(date_time)
-		if check_result['resultCode'] == 1:
+		if check_result['resultCode'] == 1 and dict is not None:
 			# 既にデータマイニングされている場合はデータを更新して改めてデータマイニング
 			where = "WHERE COIN_TYPE = '02' AND DATA_TIME = '%s'"% date_time
 			update_dict = {}
@@ -66,7 +66,7 @@ class DTMDataMining(object):
 			self.daoClass.update('VIRTUAL_CURRENCY_T',update_dict,where)
 			self.utilClass.logging('[' + self.pid + '][' + methodname + '] condtime has already now data so VIRTUAL_CURRENCY_T is updated',2)
 			update_flg = 1
-		elif check_result['resultCode'] == 2:
+		elif check_result['resultCode'] == 2 and dict is not None:
 			# まだカレントの値段がない場合
 			returnDict['resultCode'] = 1
 			self.utilClass.loggingWarn('[' + self.pid + '][' + methodname + '] condtime has not get now data so return false')
@@ -842,7 +842,7 @@ class DTMDataMining(object):
 			return insert_dict
 
 		# 平日の場合は祝日判定を実施する。
-		if self.utilClass.publicHolideyCheck(insert_dict['DATA_TIME'][0:8]):
+		if self.utilClass.publicHolideyCheck(insert_dict['DATA_TIME'][0:8],self.daoClass):
 			insert_dict['WEEK_DAY'] = 1
 			return insert_dict
 

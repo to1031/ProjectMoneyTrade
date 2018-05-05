@@ -165,7 +165,7 @@ def main():
 	# データマイニングを実行する。
 	loop_flg = True
 	while loop_flg:
-		resultdtm = DTMClass.dtmservice(standardTime,resultftpg)
+		resultdtm = DTMClass.dtmservice(standardTime,dict=resultftpg)
 		if resultdtm is None or len(resultdtm) == 0 or resultdtm['resultCode'] == 9:
 			# バッチのログを出力する.
 			utilClass.loggingWarn('DTMClass.dtmservice is abnormal termination')
