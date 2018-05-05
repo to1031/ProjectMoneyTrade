@@ -162,8 +162,8 @@ class DTMDataMining(object):
 
 
 		# 1 . 1日分を取得する。
-		where = ["WHERE COIN_TYPE = '02' AND DATA_TIME <= '%s'" % condDateTime,"AND DATA_TIME >= '%s'"% minus24H,
-			" ORDER BY DATA_TIME DESC"]
+		where = ["WHERE VIRTUAL_CURRENCY_T.COIN_TYPE = '02' AND VIRTUAL_CURRENCY_T.DATA_TIME <= '%s'" % condDateTime,"AND VIRTUAL_CURRENCY_T.DATA_TIME >= '%s'"% minus24H,
+			" ORDER BY VIRTUAL_CURRENCY_T.DATA_TIME DESC"]
 		pastData = self.daoClass.selectQuery(where,'currency_t')
 		
 		# 1日分をループして各値取得する。
@@ -260,6 +260,7 @@ class DTMDataMining(object):
 				insert_dict['FINAL_SELL_AMMOUNT'] = fsa/(fsa + fba)
 				insert_dict['FINAL_BUY_COUNT'] = fbc/(fsc + fbc)
 				insert_dict['FINAL_BUY_AMMOUNT'] = fba/(fsa + fba)
+				insert_dict['COIN_MID_PRICE'] = data[6] / ftp
 			if ftp == 0:# 基準時間と同時刻の最終鳥日価格が取得できない場合は処理しない。
 				self.utilClass.loggingWarn(condDateTime + 'is skiped not to get lastprice')
 				return False
@@ -699,8 +700,8 @@ class DTMDataMining(object):
 
 		# 1日以上過去データについて取得する。
 		# データベースから対象データを取得する。
-		where = ["WHERE COIN_TYPE = '02' AND DATA_TIME < '%s'" % minus24H,"AND DATA_TIME >= '%s'"% minus28D,
-			" ORDER BY DATA_TIME DESC"]
+		where = ["WHERE VIRTUAL_CURRENCY_T.COIN_TYPE = '02' AND VIRTUAL_CURRENCY_T.DATA_TIME < '%s'" % minus24H,"AND VIRTUAL_CURRENCY_T.DATA_TIME >= '%s'"% minus28D,
+			" ORDER BY VIRTUAL_CURRENCY_T.DATA_TIME DESC"]
 		pastData = self.daoClass.selectQuery(where,'currency_t')
 	
 		# 1日分で取得した値を当てはめる。
@@ -1007,7 +1008,7 @@ class DTMDataMining(object):
 		dict['resultCode'] = 0
 
 		# カレントの値段が既に存在しているか確認する。
-		where = ["WHERE COIN_TYPE = '02' AND DATA_TIME = '%s'" % condtime]
+		where = ["WHERE VIRTUAL_CURRENCY_T.COIN_TYPE = '02' AND VIRTUAL_CURRENCY_T.DATA_TIME = '%s'" % condtime]
 		pastData = self.daoClass.selectQuery(where,'currency_t')
 
 		if pastData is None or len(pastData) == 0:
