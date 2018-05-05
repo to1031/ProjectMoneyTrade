@@ -18,26 +18,26 @@ import hmac
 import hashlib
 import traceback
 
-class BitflyerApi(object):
+class BitflyerApi_STRE(object):
 
 	# 初期化処理
-	def __init__(self,pid,util,dao):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		self.inifile = util.inifile
+		self.inifile = dict['util'].inifile
 
 		# 機能ID
 		self.pid = 'BITF'
 
 		# call_pid
-		self.call_pid = pid
+		self.call_pid = dict['pid']
 		
 
 		# Utilクラスの初期化
-		self.utilClass = util
-		self.daoClass = dao
+		self.utilClass = dict['util']
+		self.daoClass = dict['dao']
 
 	# 最終取引価格を取得する。
 	def ftpgService(self,cointype='FX_BTC_JPY',datanum=100):

@@ -16,16 +16,16 @@ import urllib.request
 import json
 class ForgeApi(object):
 	# 初期化処理
-	def __init__(self,pid,util):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		self.inifile = util.inifile
+		self.inifile = dict['util'].inifile
 
 		# 機能ID
-		self.pid = pid
-		self.utilClass = util
+		self.pid = dict['pid']
+		self.utilClass = dict['util']
 		
 
 	# 全ての通貨ペアの値段を取得する。

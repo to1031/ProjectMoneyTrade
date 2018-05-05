@@ -42,13 +42,12 @@ class Dao(object):
 	utilClass = None
 
 	# 初期化処理
-	def __init__(self,pid,util):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		self.inifile = util.inifile
-
+		self.inifile = dict['util'].inifile
 
 		# DB情報を取得
 		self.db = self.inifile.get('mysql','db')
@@ -58,10 +57,10 @@ class Dao(object):
 		self.charset = self.inifile.get('mysql','charset')
 
 		# 機能ID
-		self.pid = pid
+		self.pid = dict['pid']
 
 		# utilクラス
-		self.utilClass = util
+		self.utilClass = dict['util']
 		
 		# DBクラスを取得する。
 		sys.path.append(self.homeDir)

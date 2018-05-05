@@ -22,21 +22,21 @@ import requests
 class MASSMailSendService(object):
 
 	# 初期化処理
-	def __init__(self,pid,util):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		self.inifile = util.inifile
+		self.inifile = dict['util'].inifile
 
 		# 当サービスの機能IDを取得する。
 		self.pid = 'MASS'
 
 		# 呼び出し元も機能ID
-		self.call_pid = pid
+		self.call_pid = dict['pid']
 
 		# util
-		self.utilClass = util
+		self.utilClass = dict['util']
 
 		#必要情報を取得する。
 		self.fromaddress=self.inifile.get('smtp','fromaddress')

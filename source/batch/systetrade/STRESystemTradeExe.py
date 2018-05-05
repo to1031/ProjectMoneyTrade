@@ -21,27 +21,35 @@ def main():
 
         # 1時的に環境パスを追加する。
 	sys.path.append(homeDir)
-	from util import Util
-	from bitflyer import BitflyerApi_STRE
-	from dataBaseAccess import Dao
-	from service import DTMDataMining,MASSMailSendService,TradeDecision,DNNSDNNSigmoid,DNNSDNNSigmoid,DGGSDataGatherSave
+	from initialize import Initialize
+
+	# 初期化クラスのオブエクトか
+	object_dict = {}
+	object_dict['pid'] = pid
+	Initializer = Initialize.Initialize(object_dict)
 
 	# utilクラスのオブジェクト取得
-	utilClass = Util.Util(pid)
+	utilClass = Initializer.utilClass
 	# daoクラスのオブジェクトを取得する。
-	daoClass = Dao.Dao(pid,utilClass)
-	# トレード決定サービスクラスを取得する
-	MASSClass = MASSMailSendService.MASSMailSendService(pid,utilClass)
-	# bitflyerAPIクラスを取得する。
-	bitflyerClass = BitflyerApi_STRE.BitflyerApi(pid,utilClass,daoClass)
+	daoClass = Initializer.daoClass
+	# メール送信クラスを取得する
+	MASSClass = Initializer.MASSClass
+	object_dict['util'] = utilClass
+	object_dict['dao'] = daoClass
+	object_dict['mass'] = MASSClass
+
+
+	# 各クラスのオブジェクト化
+	# ビットフライヤークラス
+	bitflyerClass = Initializer.class_ins('BitflyerApi_STRE',object_dict)
 	# データマイニングクラスを取得する。
-	DTMClass = DTMDataMining.DTMDataMining(pid,utilClass,daoClass)
+	DTMClass = Initializer.class_ins('DTMDataMining',object_dict)
 	# トレード決定サービスクラスを取得する。
-	TradeClass = TradeDecision.TradeDecision(pid,utilClass,daoClass,MASSClass)
+	TradeClass = Initializer.class_ins('TradeDecision',object_dict)
 	# 機械学習(sigmoid)を呼び出す
-	DNNSigmoidClass = DNNSDNNSigmoid.DNNSDNNSigmoid(pid,utilClass,daoClass)
+	DNNSigmoidClass = Initializer.class_ins('DNNSDNNSigmoid',object_dict)
 	# データ収集クラスを呼び出す。
-	DataGatherSaveClass = DGGSDataGatherSave.DGGSDataGatherSave(pid,utilClass,daoClass,MASSClass)
+	DataGatherSaveClass = Initializer.class_ins('DGGSDataGatherSave',object_dict)
 
 	# configファイルから情報を抜き出す.
 	inifile = utilClass.inifile
@@ -55,7 +63,7 @@ def main():
 
 	# システムトレード中止/再開メール確認サービス前回実行時間を取得する。
 	exestsc = inifile.get('tradedicition','msscServicemin')
-	f = open(homeDir + 'systetrade/' +  inifile.get('tradedicition','msscServicetxt'), "r")
+	f = open(homeDir + inifile.get('tradedicition','msscServicetxt'), "r")
 	exetime = f.read()[0:12]
 	f.close()
 
@@ -64,7 +72,7 @@ def main():
 		resultmssc = MASSClass.msscService(standardTime)
 
 		# 状況確認サービス制御ファイル書き込み
-		f = open(homeDir + 'systetrade/' +  inifile.get('tradedicition','msscServicetxt'), "w")
+		f = open(homeDir + inifile.get('tradedicition','msscServicetxt'), "w")
 		f.write(standardTime)
 		f.close()
 
@@ -140,14 +148,14 @@ def main():
 
 	# 状況確認の前回実行時間を取得する。
 	exestsc = inifile.get('tradedicition','stscServicemin')
-	f = open(homeDir + 'systetrade/' +  inifile.get('tradedicition','stscServicetxt'), "r")
+	f = open(homeDir + inifile.get('tradedicition','stscServicetxt'), "r")
 	exetime = f.read()[0:12]
 	f.close()
 	if exetime == '' or exetime is None or utilClass.strDateMinus(standardTime,exetime) > int(exestsc) * 60:
 		# 状況確認サービス
 		TradeClass.stscService(standardTime,resultebtr,resultevtr)
 		# 状況確認サービス制御ファイル書き込み
-		f = open(homeDir + 'systetrade/' +  inifile.get('tradedicition','stscServicetxt'), "w")
+		f = open(homeDir + inifile.get('tradedicition','stscServicetxt'), "w")
 		f.write(standardTime)
 		f.close()
 

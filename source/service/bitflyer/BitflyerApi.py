@@ -24,18 +24,15 @@ class BitflyerApi(object):
 	utilClass = None
 	
 	# 初期化処理
-	def __init__(self,pid):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		condigPath = self.homeDir + 'conf'
-		inifile = configparser.ConfigParser()
-		inifile.read(condigPath + '/config.ini', 'UTF-8')
-		self.inifile = inifile
+		self.inifile = dict['util'].inifile
 
 		# 機能ID
-		self.pid = pid
+		self.pid = dict['pid']
 
 		# Utilクラスの初期化
 		# 1時的に環境変数を追加する。

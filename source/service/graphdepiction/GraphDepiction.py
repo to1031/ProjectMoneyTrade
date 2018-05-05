@@ -18,21 +18,18 @@ import numpy as np
 class GraphDepiction(object):
 	
 	# 初期化処理
-	def __init__(self,pid):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		condigPath = self.homeDir + 'conf'
-		inifile = configparser.ConfigParser()
-		inifile.read(condigPath + '/config.ini', 'UTF-8')
-		self.inifile = inifile
+		self.inifile = dict[['util'].inifile
 
 		# 当サービスの機能IDを取得する。
 		self.called_pid = __name__[0:4]
 
 		# 呼び出し元も機能ID
-		self.pid = pid
+		self.pid = dict['pid']
 
 
 	# グラフ描写のためのデータを作成する。

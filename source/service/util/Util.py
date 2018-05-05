@@ -22,7 +22,7 @@ class Util(object):
 
 	
 	# 初期化処理
-	def __init__(self,pid):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
@@ -33,7 +33,7 @@ class Util(object):
 		self.inifile = inifile
 
 		# 機能ID
-		self.pid = pid
+		self.pid = dict['pid']
 
 
 	# ログ出力util
@@ -116,11 +116,9 @@ class Util(object):
 		return cointypeDict
 
 	# コードマスタの取得
-	def getCodM(self):
+	def getCodM(self,dao):
 		# 1時的にDBアクセスクラスをappendする。
-		sys.path.append(self.homeDir)
-		from dataBaseAccess import Dao
-		daoClass = Dao.Dao(self.pid,self)
+		daoClass = dao
 
 		# cod_mを全件取得する。
 		codm = daoClass.selectQuery('','codm')

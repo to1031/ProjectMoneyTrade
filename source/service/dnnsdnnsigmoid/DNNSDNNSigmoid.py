@@ -14,27 +14,27 @@ import configparser
 class DNNSDNNSigmoid(object):
 
 	# 初期化処理
-	def __init__(self,pid,utilClass,daoClass):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		self.inifile = utilClass.inifile
+		self.inifile = dict['util'].inifile
 
 		# 当サービスの機能IDを取得する。
 		self.pid = os.path.basename(__file__)[0:4]
 
 		# 呼び出し元も機能ID
-		self.called_pid = pid
+		self.called_pid = dict['pid']
 
 		# utilClass
-		self.utilClass = utilClass
+		self.utilClass = dict['util']
 
 		# daoクラス
-		self.daoClass = daoClass
+		self.daoClass = dict['dao']
 
 		# sys.path.append(homeDir)
-		sys.path.append(self.homeDir + 'machinelearn/sigmoid_DNN/')
+		sys.path.append(self.homeDir + 'batch/machinelearn/sigmoid_DNN/')
 		import DNN_class
 		self.DNN_class = DNN_class
 

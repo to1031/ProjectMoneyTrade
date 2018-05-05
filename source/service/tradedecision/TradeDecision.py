@@ -14,22 +14,22 @@ import sys
 
 class TradeDecision(object):
 	# 初期化処理
-	def __init__(self,pid,util,dao,mail):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
-		self.inifile = util.inifile
+		self.inifile = dict['util'].inifile
 
 		# 当サービスの機能IDを取得する。
 		self.pid = 'TDC'
 
 		# 呼び出し元も機能ID
-		self.called_pid = pid
+		self.called_pid = dict['pid']
 
 		# util dao を静的に
-		self.utilClass = util
-		self.daoClass = dao
-		self.MASSClass = mail
+		self.utilClass = dict['util']
+		self.daoClass = dict['dao']
+		self.MASSClass = dict['mass']
 
 
 	# 証拠金更新サービス

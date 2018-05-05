@@ -16,26 +16,23 @@ import sys
 class DTMDataMining(object):
 	
 	# 初期化処理
-	def __init__(self,pid,util,dao):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		condigPath = self.homeDir + 'conf'
-		inifile = configparser.ConfigParser()
-		inifile.read(condigPath + '/config.ini', 'UTF-8')
-		self.inifile = inifile
+		self.inifile = dict['util'].inifile
 
 		# 当サービスの機能IDを取得する。
 		self.pid = os.path.basename(__file__)[0:3]
 
 		# 呼び出し元も機能ID
-		self.call_pid = pid
+		self.call_pid = dict['pid']
 
 		# Utilクラスの初期化
 		# 1時的に環境変数を追加する。
-		self.utilClass = util
-		self.daoClass = dao
+		self.utilClass = dict['util']
+		self.daoClass = dict['dao']
 
 	# メインメソッド
 	def dtmservice(self,date_time,dict):
@@ -83,7 +80,7 @@ class DTMDataMining(object):
 		insert_dict['DATA_TIME'] = date_time
 		
 		# コードマスタを取得する。
-		codm_dict = self.utilClass.getCodM()
+		codm_dict = self.utilClass.getCodM(self.daoClass)
 
 		# 日時の曜日を取得する。
 		whatday = int(self.utilClass.getwhatday(date_time[0:8]))

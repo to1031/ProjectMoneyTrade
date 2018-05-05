@@ -14,26 +14,23 @@ import sys
 
 class DGGSDataGatherSave(object):
 	# 初期化処理
-	def __init__(self,pid,util,dao,mail):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		condigPath = self.homeDir + 'conf'
-		inifile = configparser.ConfigParser()
-		inifile.read(condigPath + '/config.ini', 'UTF-8')
-		self.inifile = inifile
+		self.inifile = dict['util'].inifile
 
 		# 当サービスの機能IDを取得する。
 		self.pid = 'DGGS'
 
 		# 呼び出し元も機能ID
-		self.called_pid = pid
+		self.called_pid = dict['pid']
 
 		# util dao を静的に
-		self.utilClass = util
-		self.daoClass = dao
-		self.MASSClass = mail
+		self.utilClass = dict['util']
+		self.daoClass = dict['dao']
+		self.MASSClass = dict['mass']
 
 
 	# 予想結果保存サービス
