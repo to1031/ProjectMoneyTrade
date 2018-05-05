@@ -201,13 +201,6 @@ def main():
 	DataGatherSaveClass.prssService(resultdnns['predict'],resultftpg['endTradePrice'])
 
 
-
-	# デバッグ
-	return
-
-
-
-
 	# 既存予約が1件以上の場合予約を取り消すか判定する
 	if resultebtr['resultNum'] != 0:
 		# 予約取引取消判定サービスを呼び出す。

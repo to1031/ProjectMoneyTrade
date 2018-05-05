@@ -14,7 +14,7 @@ while true ; do
 arg=$(date "+%Y%m%d%H%M")
 argday=$(date "+%Y%m%d")
 # pythonの実行
-python ${APPMONEYTRADE}/getData/NDGNowDataGet.py ${arg}
-python ${APPMONEYTRADE}/getpairData/PNGPairNowGet.py ${arg}
+python ${APPMONEYTRADE}batch/getData/NDGNowDataGet.py ${arg}
+python ${APPMONEYTRADE}batch/getpairData/PNGPairNowGet.py ${arg}
 sleep 5
 done

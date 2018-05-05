@@ -22,22 +22,30 @@ def main():
 
         # 1時的に環境変数を追加する。
 	sys.path.append(homeDir)
-	from util import Util
-	from util import JsonParse
-	from bitflyer import BitflyerApi
-	from dataBaseAccess import Dao
+	from initialize import Initialize
+
+	# 初期化クラスのオブエクトか
+	object_dict = {}
+	object_dict['pid'] = pid
+	Initializer = Initialize.Initialize(object_dict)
 
 	# utilクラスのオブジェクト取得
-	utilClass = Util.Util(pid)
+	utilClass = Initializer.utilClass
+	# daoクラスのオブジェクトを取得する。
+	dao = Initializer.daoClass
+	# メール送信クラスを取得する
+	MASSClass = Initializer.MASSClass
+	object_dict['util'] = utilClass
+	object_dict['dao'] = dao
+	object_dict['mass'] = MASSClass
 
 	# jsonparseクラスのオブジェクト取得
-	jsonClass = JsonParse.JsonParse(pid)
+	jsonClass = Initializer.class_ins('JsonParse',object_dict)
 
-	# daoクラスのオブジェクトを取得する。
-	dao = Dao.Dao(pid,utilClass)
 
 	# bitflyyerApiクラスを取得
-	bitflyerClass = BitflyerApi.BitflyerApi(pid)
+	bitflyerClass = Initializer.class_ins('BitflyerApi',object_dict)
+
 
 	# configファイルから情報を抜き出す.
 	inifile = utilClass.inifile

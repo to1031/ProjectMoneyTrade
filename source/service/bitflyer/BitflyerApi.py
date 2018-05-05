@@ -37,8 +37,7 @@ class BitflyerApi(object):
 		# Utilクラスの初期化
 		# 1時的に環境変数を追加する。
 		sys.path.append(self.homeDir)
-		from util import Util
-		self.utilClass = Util.Util(pid)
+		self.utilClass = dict['util']
 		
 
 	# board + execuru

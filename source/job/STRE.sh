@@ -24,6 +24,6 @@ while true ; do
 arg=$(date "+%Y%m%d%H%M")
 argday=$(date "+%Y%m%d")
 # pythonの実行
-python ${APPMONEYTRADE}systetrade/STRESystemTradeExe.py ${arg}
+python ${APPMONEYTRADE}batch/systetrade/STRESystemTradeExe.py ${arg}
 sleep 2
 done
