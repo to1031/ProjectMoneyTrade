@@ -42,7 +42,7 @@ def main():
 
 
 	# VIRTUAL_CURRENCY_T に格納されている日時分を全て取得する。
-	where = ["WHERE INS_PID !='BTV' AND DATA_TIME > '201706081726'"," ORDER BY DATA_TIME"]
+	where = ["WHERE COIN_TYPE = '02' AND INS_PID !='BTV' AND DATA_TIME > '201802132151'"," ORDER BY DATA_TIME"]
 	result = daoClass.selectQuery(where,'BTV_currency_t')
 
 	for info in result:

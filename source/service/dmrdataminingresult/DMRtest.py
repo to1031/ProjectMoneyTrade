@@ -16,20 +16,26 @@ def main():
 	#引数の取得
 	args = sys.argv
 
-        # 1時的に環境変数を追加する。
 	sys.path.append(homeDir)
-	import DMRDataMiningResult
-	from util import Util
-	from dataBaseAccess import Dao
+	from initialize import Initialize
+	# 初期化クラスのオブエクトか
+	object_dict = {}
+	object_dict['pid'] = pid
+	Initializer = Initialize.Initialize(object_dict)
 
 	# utilクラスのオブジェクト取得
-	utilClass = Util.Util(pid)
+	utilClass = Initializer.utilClass
+	# daoクラスのオブジェクトを取得する。
+	daoClass = Initializer.daoClass
+	# メール送信クラスを取得する
+	MASSClass = Initializer.MASSClass
+	object_dict['util'] = utilClass
+	object_dict['dao'] = daoClass
+	object_dict['mass'] = MASSClass
 
 	# Test対象クラスのインスタンスを生成する。
-	DTMDataMiningClass = DMRDataMiningResult.DMRDataMiningResult(pid)
+	DTMDataMiningClass = Initializer.class_ins('DMRDataMiningResult',object_dict)
 
-	# Daoクラスをインスタンス化
-	daoClass = Dao.Dao(pid)
 
 	# VIRTUAL_CURRENCY_T に格納されている日時分を全て取得する。
 	where = ["WHERE DATA_MINING_RESULT_T.DATA_TIME is null"," ORDER BY DATA_MINING_T.DATA_TIME"]

@@ -28,16 +28,22 @@ def main():
 
     # log用の文字列準備
     pid = os.path.basename(__file__)[0:4] # 機能IDの取得
-
-    # 1時的に環境変数を追加する。
     sys.path.append(homeDir)
-    from util import Util
-    from dataBaseAccess import Dao
+    from initialize import Initialize
+    # 初期化クラスのオブエクトか
+    object_dict = {}
+    object_dict['pid'] = pid
+    Initializer = Initialize.Initialize(object_dict)
+ 
     # utilクラスのオブジェクト取得
-    utilClass = Util.Util(pid) 
-    daoClass = Dao.Dao(pid,utilClass)
-    # utilクラス、propatiesファイル、DBアクセスクラスまでのpathを取得する。
-
+    utilClass = Initializer.utilClass
+    # daoクラスのオブジェクトを取得する。
+    daoClass = Initializer.daoClass
+    # メール送信クラスを取得する
+    MASSClass = Initializer.MASSClass
+    object_dict['util'] = utilClass
+    object_dict['dao'] = daoClass
+    object_dict['mass'] = MASSClass
     # configファイルから情報を抜き出す.
     inifile = utilClass.inifile
 
@@ -50,13 +56,13 @@ def main():
 
     # ハイパーパラメータ
     data_num = 10000
-    result_column = 142
+    result_column = 143
     kensho_num = 10000
     n_in = 0
     n_out = 0
     
     # DBより学習データを取得する。
-    where = ["WHERE DATA_MINING_RESULT_T.DATA_TIME >= '201709010000' AND DATA_MINING_RESULT_T.DATA_TIME < '2017110100000'"]
+    where = ["WHERE DATA_MINING_RESULT_T.DATA_TIME >= '201801010000'"]
     dataList = daoClass.selectQuery(where,'machinelearn')
 
     # かうんと
@@ -94,7 +100,7 @@ def main():
                 resultlist.append(datainfo[result_column])
             
             # 学習データ格納
-            if i not in ifList and i <= 119:
+            if i not in ifList and i <= 120:
                 paramlist.append(datainfo[i])
             
 

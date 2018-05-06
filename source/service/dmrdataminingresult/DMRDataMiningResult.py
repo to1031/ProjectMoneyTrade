@@ -16,31 +16,23 @@ import sys
 class DMRDataMiningResult(object):
 	
 	# 初期化処理
-	def __init__(self,pid):
+	def __init__(self,dict):
 		# 環境変数を取得する。
 		self.homeDir = os.environ["APPMONEYTRADE"]
 
 		# iniconfigファイルを読み出す。
-		condigPath = self.homeDir + 'conf'
-		inifile = configparser.ConfigParser()
-		inifile.read(condigPath + '/config.ini', 'UTF-8')
-		self.inifile = inifile
+		self.inifile = dict['util'].inifile
 
 		# 当サービスの機能IDを取得する。
 		self.pid = __name__[0:3]
 
 		# 呼び出し元も機能ID
-		self.call_pid = pid
+		self.call_pid = dict['pid']
 
 		# Utilクラスの初期化
 		# 1時的に環境変数を追加する。
-		sys.path.append(self.homeDir)
-		from util import Util
-		self.utilClass = Util.Util(self.pid)
-		from dataBaseAccess import SELECTGET
-		self.SELECT = SELECTGET.MySQLselect()
-		from dataBaseAccess import Dao
-		self.daoClass = Dao.Dao(pid)
+		self.utilClass = dict['util']
+		self.daoClass = dict['dao']
 
 	# メインメソッド
 	def main(self,date_time):
@@ -65,7 +57,7 @@ class DMRDataMiningResult(object):
 		insert_dict = self.nullcheck(insert_dict)
 
 		# 取得した情報をinsertする。
-		self.daoClass.DATA_MINING_RESULT_T_Insert(insert_dict)
+		self.daoClass.insert('DATA_MINING_RESULT_T',insert_dict)
 
 
 	# 過去データを取得して各値を取得する。
@@ -100,9 +92,9 @@ class DMRDataMiningResult(object):
 		self.utilClass.logging('condtime is ..' + str(condList),2)
 
 		# 1 . 1日分を取得する。
-		where = ["WHERE COIN_TYPE = '02' AND DATA_TIME >= '%s'" % condDateTime,"AND DATA_TIME <= '%s'"% plus24H,
-			" ORDER BY DATA_TIME ASC"]
-		postData = self.SELECT.selectexe(where,'currency_t')
+		where = ["WHERE VIRTUAL_CURRENCY_T.COIN_TYPE = '02' AND VIRTUAL_CURRENCY_T.DATA_TIME >= '%s'" % condDateTime,"AND VIRTUAL_CURRENCY_T.DATA_TIME <= '%s'"% plus24H,
+			" ORDER BY VIRTUAL_CURRENCY_T.DATA_TIME ASC"]
+		postData = self.daoClass.selectQuery(where,'currency_t')
 		
 		# 1日分をループして各値取得する。
 		# 事前処理
@@ -385,7 +377,7 @@ class DMRDataMiningResult(object):
 
 	# 終了処理
 	def finish(self):
-		self.SELECT.closeConn()
+		self.daoClass.closeConn()
 
 	# インサート情報のnullチェック
 	def nullcheck(self,dict):
