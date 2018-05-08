@@ -121,7 +121,7 @@ def main():
     
     
     # 学習データの準備 n_in=入力の次元 n_out=出力個数
-    model = DNN_class.DNN(n_in = input_num,n_hiddens=[200,300,200],n_out = 1)
+    model = DNN_class.DNN(n_in = input_num,n_hiddens=[3000,5000,3000],n_out = 1)
     n_in = input_num
     n_out = 1
     #model = DNN_class.DNN(n_in = input_num,n_hiddens=[1000,1500,1000],n_out = 1)
@@ -134,7 +134,7 @@ def main():
 
 
     # モデルの実行
-    history = model.fit(X_train,Y_train,epochs=1,batch_size=100,p_keep=0.5,path=path)
+    history = model.fit(X_train,Y_train,epochs=100,batch_size=100,p_keep=0.5,path=path)
 
 
 
