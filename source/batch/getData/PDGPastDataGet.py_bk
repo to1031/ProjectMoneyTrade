@@ -33,14 +33,14 @@ def main():
 	# メール送信クラスを取得する
 	MASSClass = Initializer.MASSClass
 	object_dict['util'] = utilClass
-	object_dict['dao'] = dao
+	object_dict['dao'] = daoClass
 	object_dict['mass'] = MASSClass
 
 	# jsonparseクラスのオブジェクト取得
-	jsonClass = Initializer.class_ins('JsonParse',object_dict)
+	jsonClass = Initialize.class_ins('JsonParse',object_dict)
 
 	# bitflyyerApiクラスを取得
-	bitflyerClass = Initializer.class_ins('BitflyerApi',object_dict)
+	bitflyerClass = Initialize.class_ins('BitflyerApi',object_dict)
 
 	# configファイルから情報を抜き出す.
 	inifile = utilClass.inifile
@@ -78,80 +78,76 @@ def main():
 	logstr = ''
 	logstr = 'call webAPI by ' + targetcoin
 	utilClass.logging(logstr,0)
+	before = 114681642
 	lastNum = 1000000000000
-
-	# 前回実行時間を取得する。
-	f = open(homeDir + 'batch/getData/PDGEXE_NO.txt', "r")
-	exetime = f.read()
-	if exetime == '':
-		utilClass.logging('before no is not found',2)
-		return
-
-	before = int(exetime)
-	f.close()
-
 	for i in range(lastNum):
 
-		try:
+		# ファイルパスを取得する。
+		filepath = homeDir + outPath + 'executions_past' + '/'  + targetcoin
 
-			# ファイルパスを取得する。
-			filepath = homeDir + outPath + 'executions_past' + '/'  + targetcoin
-
-			puery = ''
-			puery = pueryStayStr
+		puery = ''
+		puery = pueryStayStr
 	
-			# webapiを呼び出す。
-			josnStr = bitflyerClass.executions_pastApi(apiurl,targetcoin,puery,executions,before)
+		# webapiを呼び出す。
+		josnStr = bitflyerClass.executions_pastApi(apiurl,targetcoin,puery,executions,before)
 
-			# 取れなかった値を取得する。
-			if josnStr == 0:
-				utilClass.logging('can not get api is' + str(before),2)
-				continue
+		# 取れなかった値を取得する。
+		if josnStr == 0:
+			utilClass.logging('can not get api is' + str(before),2)
+			continue
 		
-			#ファイルを保存する。
-			savaFile(josnStr,filepath)
+		#ファイルを保存する。
+		savaFile(josnStr,filepath)
 
 
-			#filepath
-			filepath = homeDir + outPath + 'executions_past' + '/' + targetcoin + '.json'
+		#filepath
+		filepath = homeDir + outPath + 'executions_past' + '/' + targetcoin + '.json'
 
-			# log
-			logstr = ''
-			logstr = 'read json by ' + filepath
-			utilClass.logging(logstr,0)
+		# log
+		logstr = ''
+		logstr = 'read json by ' + filepath
+		utilClass.logging(logstr,0)
 
-			# ファイルの存在チェック
-			if not os.path.exists(filepath):
-				logstr = 'file not found:' + filepath
-				utilClass.loggingError(logstr,before)
-				continue
+		# ファイルの存在チェック
+		if not os.path.exists(filepath):
+			logstr = 'file not found:' + filepath
+			utilClass.loggingError(logstr,before)
+			continue
 
-			# json読み込みとパース
-			resultDict = jsonClass.executionsPostParse(filepath,'02')
-			# デバッグ返却リストの数
-			utilClass.logging('get datas num = ' + str(len(resultDict)) + 'by [' + str(before) + ']' ,2)
-			# boradの挿入を行う。
-			boardInsert(resultDict,pid,dao,before)
+		# json読み込みとパース
+		resultDict = jsonClass.executionsPostParse(filepath,'02')
+		# デバッグ返却リストの数
+		utilClass.logging('get datas num = ' + str(len(resultDict)) + 'by [' + str(before) + ']' ,2)
+		# boradの挿入を行う。
+		boardInsert(resultDict,pid,dao,before)
 
-			# ファイルを消する。
-			os.remove(filepath)
+		# ファイルを消する。
+		os.remove(filepath)
 
-			# イン売り面と
-			before = before + 99
-
-		except:
-			import traceback
-			error_text = traceback.format_exc()
-			utilClass.loggingError(error_text)
-			utilClass.logging('except occurrd',2)
-			f = open(homeDir + 'batch/getData/PDGEXE_NO.txt', "w")
-			f.write(str(before))
-			f.close()
-			break
-
+		# イン売り面と
+		before = before + 99
 	# このバッチ処理の終了log
 	utilClass.logging(pid,1)
 
+
+# webapi呼び出し
+def call_api(apiurl,coin,puery,apitype):
+	
+	# ビットコイン/円の場合はパラメータが必要ない
+	data = {}
+	data['product_code'] = coin
+	if 'executions' in apitype:
+		data['count'] = 500
+	url_values = urllib.parse.urlencode(data)
+	
+	if puery != '':
+		req = urllib.request.Request(apiurl + apitype + "?" + url_values,headers={'User-Agent': 'Mozilla/5.0'})
+	else:
+		req = urllib.request.Request(apiurl + apitype,headers={'User-Agent': 'Mozilla/5.0'})
+		
+	with urllib.request.urlopen(req) as res:
+		response = res.read().decode("utf-8")
+		return response
 
 # webapi取得結果の保存
 def savaFile(jsonStr,path):

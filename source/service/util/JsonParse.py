@@ -145,7 +145,8 @@ class JsonParse(object):
 			returnDict['TRADE_TYPE'] = '0' if json_dict[i]['side'] == 'SELL' else '1'
 			returnDict['TRADE_AMMOUNT'] = json_dict[i]['size']
 			returnDict['FINAL_TRADE_PRICE'] = json_dict[i]['price']
-			returnDict['EXEC_DATE'] = self.utilClass.addDateTimeStr(json_dict[i]['exec_date'].replace('-','').replace('T','').replace(':','')[0:12],0,9,0)
+			second = json_dict[i]['exec_date'].replace('-','').replace('T','').replace(':','')[12:14]
+			returnDict['EXEC_DATE'] = datetime.strptime(self.utilClass.addDateTimeStr(json_dict[i]['exec_date'].replace('-','').replace('T','').replace(':','')[0:12],0,9,0) + second,'%Y%m%d%H%M%S')
 			resultList.append(returnDict)
 
 
